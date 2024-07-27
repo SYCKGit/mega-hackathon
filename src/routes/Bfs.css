@@ -2,5 +2,19 @@
     width: 800px;
     height: 600px;
     border: 1px solid #ccc;
-    margin: 20px auto;
+}
+
+#container {
+    display: flex;
+    align-items: stretch;
+}
+
+#inp {
+    flex: 1;
+    resize: none;
+}
+
+#cy {
+    flex: 3;
+    margin-left: 20px;
 }
