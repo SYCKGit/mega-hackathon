@@ -4,6 +4,12 @@ body {
   padding: 0;
 }
 
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
 header {
   background-color: #4CAF50;
   color: white;
@@ -24,9 +30,7 @@ footer {
   color: white;
   text-align: center;
   padding: 1em 0;
-  position: fixed;
   width: 100%;
-  bottom: 0;
 }
 
 a {
