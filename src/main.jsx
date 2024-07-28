@@ -6,8 +6,6 @@ import Bfs from './routes/Bfs.jsx';
 import Dfs from './routes/Dfs.jsx';
 import Dijkstra from './routes/Dijkstra.jsx';
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,8 +23,6 @@ const router = createBrowserRouter([
     path: '/dijkstra',
     element: <Dijkstra />
   }
-
-
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
