@@ -1,5 +1,5 @@
 import Graph from "../components/Graph";
-import "./Dfs.css";
+import "../styles.css";
 
 export default function Dfs() {
   return (

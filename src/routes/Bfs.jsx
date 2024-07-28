@@ -1,5 +1,5 @@
 import Graph from "../components/Graph";
-import "./Bfs.css";
+import "../styles.css";
 
 export default function Bfs() {
   return (

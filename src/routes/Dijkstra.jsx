@@ -1,5 +1,5 @@
 import Graph from "../components/Graph";
-import "./Dijkstra.css";
+import "../styles.css";
 
 export default function Dijkstra() {
   return (
