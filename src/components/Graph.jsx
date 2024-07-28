@@ -11,13 +11,13 @@ function parseData(data) {
   let vertices = new Set(), edges = new Set();
 
   for (const line of data.split("\n")) {
-    const [source, target] = line.trim().split(" ");
+    const [source, target, weight] = line.trim().split(" ");
     if (source)
       vertices.add(source);
     if (target)
       vertices.add(target);
     if (source && target)
-      edges.add({ source, target });
+      edges.add({ source, target, weight });
   }
 
   return { vertices: Array.from(vertices), edges: Array.from(edges) };
@@ -58,7 +58,9 @@ export default function Graph() {
             "line-color": "#6EACDA",
             "target-arrow-color": "#6EACDA",
             "target-arrow-shape": isDirected ? "triangle" : "none",
-            "curve-style": "bezier"
+            "curve-style": "bezier",
+            "label": "data(weight)",
+            "text-margin-y": "-10px"
           }
         }
       ],
@@ -100,8 +102,13 @@ export default function Graph() {
         position: pos[vertex] || { x: Math.random() * 800, y: Math.random() * 600 }
       });
     });
-    edges.forEach(({ source, target }) => {
-      cy.current.add({ group: "edges", data: { id: source + "-" + target, source, target } });
+    const count = {};
+    edges.forEach(({ source, target, weight }) => {
+      count[source] = (count[source] || 0) + 1;
+      const edge = { group: "edges", data: { id: `${source}-${target}-${count[source]}`, source, target } };
+      if (weight !== undefined)
+        edge.data.weight = weight;
+      cy.current.add(edge);
     });
 
     cy.current.style().selector('edge').style({
