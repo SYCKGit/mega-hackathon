@@ -5,8 +5,8 @@ export class AnimationQueue {
     this.running = false;
   }
 
-  push(el) {
-    this.queue.push(el);
+  push(el, callback) {
+    this.queue.push([el, callback]);
     if (!this.running)
       this.execute();
   }
@@ -17,11 +17,12 @@ export class AnimationQueue {
       return;
     }
     this.running = true;
-    const el = this.queue.shift();
+    const [el, callback] = this.queue.shift();
     if (el.isNode())
       el.animate({style: { "background-color": "#03346E" }, duration: this.timing});
     else if (el.isEdge())
       el.animate({style: { "line-color": "#03346E", "target-arrow-color": "#03346E" }, duration: this.timing});
+    if (callback) callback(el, this.timing);
     setTimeout(() => this.execute(), this.timing * 2);
   }
 }
