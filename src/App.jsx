@@ -12,11 +12,19 @@ function App() {
                     <p>Learn about Breadth-First Search (BFS).</p>
                     <a href="bfs">Go to BFS Algorithm Page</a>
                 </section>
+
                 <section id="dfs">
                     <h2>DFS</h2>
                     <p>Learn about Depth-First Search (DFS).</p>
                     <a href="dfs">Go to DFS Algorithm Page</a>
                 </section>
+
+                <section id="dijkstra">
+                    <h2>Dijkstra</h2>
+                    <p>Learn about Dijkstra.</p>
+                    <a href="dijkstra">Go to Dijkstra Algorithm Page</a>
+                </section>
+
 
             </main>
             <footer>
