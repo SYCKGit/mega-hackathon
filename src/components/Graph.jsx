@@ -6,7 +6,7 @@ import "./Graph.css";
  * Parse the input data to extract vertices and edges.
  * @param {string} data - Input data containing edges.
  * @returns {object} - Object containing vertices and edges.
-*/
+ */
 function parseData(data){
   let vertices = new Set(), edges = new Set();
 
@@ -35,13 +35,13 @@ export default function Graph(){
         {
           selector: "node",
           style: {
-            "background-color": "#6EACDA",  // Blue color
-            "shape": "ellipse",          // Circular shape
-            "label": "data(id)",         // Display node ID
-            "color": "#fff",            // White text color
-            "text-valign": "center",      // Center text vertically
-            "text-halign": "center",      // Center text horizontally
-            "font-size": "16px"          // Font size
+            "background-color": "#6EACDA",
+            "shape": "ellipse",
+            "label": "data(id)",
+            "color": "#fff",
+            "text-valign": "center",
+            "text-halign": "center",
+            "font-size": "16px"
           }
         },
         {
@@ -54,8 +54,8 @@ export default function Graph(){
           selector: "edge",
           style: {
             "width": 3,
-            "line-color": "#6EACDA",      // Red color
-            "target-arrow-color": "#6EACDA", // Red color
+            "line-color": "#6EACDA",
+            "target-arrow-color": "#6EACDA",
             "target-arrow-shape": "triangle",
             "curve-style": "bezier"
           }
@@ -64,6 +64,20 @@ export default function Graph(){
       layout: {
         name: "grid",
         rows: 1
+      }
+    });
+    cy.current.on('tap', 'node', (event) => {
+      const node = event.target;
+      if (node.selected()) {
+        node.style("background-color", "#6EACDA");
+        node.unselect();
+      } else {
+        cy.current.nodes().forEach(n => {
+          n.style("background-color", "#6EACDA");
+          n.unselect();
+        });
+        node.style("background-color", "#E2E2B6");
+        node.select();
       }
     });
 
@@ -154,6 +168,18 @@ export default function Graph(){
     highlightNextEle();
   };
 
+  const handleResetClick = () => {
+    cy.current.nodes().forEach(node => {
+      node.style("background-color", "#6EACDA");
+      node.unselect();
+    });
+    cy.current.edges().forEach(edge => {
+      edge.style("line-color", "#6EACDA");
+      edge.style("target-arrow-color", "#6EACDA");
+      edge.unselect();
+    });
+  };
+
   return (
       <div id="container">
         <div style={{ marginBottom: '10px' }}>
@@ -168,6 +194,9 @@ export default function Graph(){
           </button>
           <button onClick={handleDFSClick} style={{ width: '100%', marginTop: '10px' }}>
             Start DFS
+          </button>
+          <button onClick={handleResetClick} style={{ width: '100%', marginTop: '10px' }}>
+            Reset
           </button>
         </div>
         <div id="cy" style={{ width: '100%', height: '500px' }}></div>
