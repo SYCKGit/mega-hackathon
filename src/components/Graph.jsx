@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import cytoscape from "cytoscape";
+import "./Graph.css";
 
 /**
  * Parse the input data to extract vertices and edges.
@@ -34,7 +35,7 @@ export default function Graph(){
         {
           selector: "node",
           style: {
-            "background-color": "#007bff",  // Blue color
+            "background-color": "#6EACDA",  // Blue color
             "shape": "ellipse",          // Circular shape
             "label": "data(id)",         // Display node ID
             "color": "#fff",            // White text color
@@ -44,11 +45,17 @@ export default function Graph(){
           }
         },
         {
+          selector: "node:selected",
+          style: {
+            "background-color": "#E2E2B6",
+          }
+        },
+        {
           selector: "edge",
           style: {
             "width": 3,
-            "line-color": "#ff0000",      // Red color
-            "target-arrow-color": "#ff0000", // Red color
+            "line-color": "#6EACDA",      // Red color
+            "target-arrow-color": "#6EACDA", // Red color
             "target-arrow-shape": "triangle",
             "curve-style": "bezier"
           }
@@ -61,11 +68,6 @@ export default function Graph(){
     });
 
     window.cyto = cy.current;
-
-    cy.current.on("tap", "node", function(evt) {
-      let node = evt.target;
-      alert("Node " + node.id() + " tapped!");
-    });
   }, []);
 
   useEffect(() => {
@@ -87,10 +89,57 @@ export default function Graph(){
     });
   }, [data]);
 
+  const handleBFSClick = () => {
+    const selectedNodes = cy.current.$('node:selected');
+    if (selectedNodes.nonempty()) {
+      bfs(selectedNodes.first().id());
+    } else {
+      alert("Please select a node to start BFS.");
+    }
+  };
+  const bfs = (startNode) => {
+    const bfsResult = cy.current.elements().bfs(`#${startNode}`, function(){}, true);
+    let i = 0;
+    const highlightNextEle = function(){
+      if( i < bfsResult.path.length ){
+        const ele = bfsResult.path[i];
+        if (ele.isNode()) {
+          ele.animate({
+            style: { "background-color": "#03346E"},
+            duration: 500
+          });
+        } else if (ele.isEdge()) {
+          ele.animate({
+            style: { "line-color": "#03346E", "target-arrow-color": "#03346E" },
+            duration: 500
+          });
+        }
+        i++;
+        setTimeout(highlightNextEle, 1000);
+      }
+    };
+    highlightNextEle();
+  };
+
   return (
-    <div id="container">
-      <textarea id="inp" value={data} onChange={(e) => setData(e.target.value)}></textarea>
-      <div id="cy"></div>
-    </div>
+      <div id="container">
+        <div style={{ marginBottom: '10px' }}> {/* Container for textarea and button */}
+          <textarea
+              id="inp"
+              value={data}
+              onChange={(e) => setData(e.target.value)}
+              style={{ width: '100%', height: '400px', marginBottom: '10px' }} // Set the height to 400px and ensure the textarea is full width
+          ></textarea>
+          <button
+              onClick={handleBFSClick}
+              style={{ width: '100%' }} // Make the button the same width as the textarea
+          >
+            Start BFS
+          </button>
+        </div>
+        <div id="cy" style={{ width: '100%', height: '500px' }}> {/* Maintain explicit dimensions for the graph area */}
+          {/* Graph will render here */}
+        </div>
+      </div>
   );
 }
