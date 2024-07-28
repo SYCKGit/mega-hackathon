@@ -146,7 +146,7 @@ export default function Graph({ algo, animation }) {
               value={data}
               onChange={(e) => setData(e.target.value)}
           ></textarea>
-          <button onClick={() => setIsDirected(!isDirected)} style={{ width: '100%' }}>
+          <button onClick={() => setIsDirected(!isDirected)}>
             {isDirected ? "Switch to Undirected Graph" : "Switch to Directed Graph"}
           </button>
           <button onClick={handleClick}>
