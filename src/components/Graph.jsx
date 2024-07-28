@@ -23,7 +23,7 @@ function parseData(data) {
   return { vertices: Array.from(vertices), edges: Array.from(edges) };
 }
 
-export default function Graph() {
+export default function Graph({ algo, animation }) {
   const [data, setData] = useState("");
   const [isDirected, setIsDirected] = useState(true);
   const cy = useRef();
@@ -117,70 +117,13 @@ export default function Graph() {
 
   }, [data, isDirected]);
 
-  const handleBFSClick = () => {
+  const handleClick = () => {
     const selectedNodes = cy.current.$('node:selected');
     if (selectedNodes.nonempty()) {
-      bfs(selectedNodes.first().id());
+      animation(cy.current, selectedNodes.first().id(), isDirected);
     } else {
-      alert("Please select a node to start BFS.");
+      alert(`Please select a node to start ${algo}.`);
     }
-  };
-
-  const bfs = (startNode) => {
-    const bfsResult = cy.current.elements().bfs(`#${startNode}`, function () { }, isDirected);
-    let i = 0;
-    const highlightNextEle = function () {
-      if (i < bfsResult.path.length) {
-        const ele = bfsResult.path[i];
-        if (ele.isNode()) {
-          ele.animate({
-            style: { "background-color": "#03346E" },
-            duration: 500
-          });
-        } else if (ele.isEdge()) {
-          ele.animate({
-            style: { "line-color": "#03346E", "target-arrow-color": "#03346E" },
-            duration: 500
-          });
-        }
-        i++;
-        setTimeout(highlightNextEle, 1000);
-      }
-    };
-    highlightNextEle();
-  };
-
-  const handleDFSClick = () => {
-    const selectedNodes = cy.current.$('node:selected');
-    if (selectedNodes.nonempty()) {
-      dfs(selectedNodes.first().id());
-    } else {
-      alert("Please select a node to start DFS.");
-    }
-  };
-
-  const dfs = (startNode) => {
-    const dfsResult = cy.current.elements().dfs(`#${startNode}`, function () { }, isDirected);
-    let i = 0;
-    const highlightNextEle = function () {
-      if (i < dfsResult.path.length) {
-        const ele = dfsResult.path[i];
-        if (ele.isNode()) {
-          ele.animate({
-            style: { "background-color": "#B30000" },
-            duration: 500
-          });
-        } else if (ele.isEdge()) {
-          ele.animate({
-            style: { "line-color": "#B30000", "target-arrow-color": "#B30000" },
-            duration: 500
-          });
-        }
-        i++;
-        setTimeout(highlightNextEle, 1000);
-      }
-    };
-    highlightNextEle();
   };
 
   const handleResetClick = () => {
@@ -202,18 +145,14 @@ export default function Graph() {
             id="inp"
             value={data}
             onChange={(e) => setData(e.target.value)}
-            style={{ width: '100%', height: '400px', marginBottom: '10px' }}
         ></textarea>
           <button onClick={() => setIsDirected(!isDirected)} style={{ width: '100%' }}>
             {isDirected ? "Switch to Undirected Graph" : "Switch to Directed Graph"}
           </button>
-          <button onClick={handleBFSClick} style={{ width: '100%', marginTop: '10px' }}>
-            Start BFS
+          <button onClick={handleClick}>
+            Start {algo}
           </button>
-          <button onClick={handleDFSClick} style={{ width: '100%', marginTop: '10px' }}>
-            Start DFS
-          </button>
-          <button onClick={handleResetClick} style={{ width: '100%', marginTop: '10px' }}>
+          <button onClick={handleResetClick}>
             Reset
           </button>
         </div>

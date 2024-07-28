@@ -1,4 +1,5 @@
 import Graph from "../components/Graph";
+import { searchAnimation } from "../lib/utils";
 import "../styles.css";
 
 export default function Dfs() {
@@ -42,7 +43,7 @@ export default function Dfs() {
         </section>
         <section id="graph-visualizer">
           <h2>Graph Visualizer</h2>
-          <Graph />
+          <Graph algo="DFS" animation={searchAnimation("dfs")} />
         </section>
       </main>
       <footer>

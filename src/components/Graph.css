@@ -1,4 +1,3 @@
-
 #cy {
   height: 600px;
   border: 1px solid #ccc;
@@ -20,9 +19,17 @@
   font-family: 'Courier New', Courier, monospace;
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 400px;
+  margin-bottom: 10px;
 }
 
 #inp:focus {
   outline: none;
   border-color: #3E8E41;
+}
+
+button {
+  width: 100%;
+  margin-top: 10px;
 }

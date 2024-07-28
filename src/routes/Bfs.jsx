@@ -1,4 +1,5 @@
 import Graph from "../components/Graph";
+import { searchAnimation } from "../lib/utils";
 import "../styles.css";
 
 export default function Bfs() {
@@ -43,7 +44,7 @@ export default function Bfs() {
         </section>
         <section id="graph-visualizer">
           <h2>Graph Visualizer</h2>
-          <Graph />
+          <Graph algo="BFS" animation={searchAnimation("bfs")} />
         </section>
       </main>
       <footer>
