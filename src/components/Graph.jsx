@@ -38,7 +38,7 @@ export default function Graph({ algo, animation }) {
           style: {
             "background-color": "#6EACDA",
             "shape": "ellipse",
-            "label": "data(id)",
+            "label": "data(label)",
             "color": "#fff",
             "text-valign": "center",
             "text-halign": "center",
@@ -84,8 +84,6 @@ export default function Graph({ algo, animation }) {
         node.select();
       }
     });
-
-    window.cyto = cy.current;
   }, []);
 
   useEffect(() => {
@@ -98,7 +96,7 @@ export default function Graph({ algo, animation }) {
     const { vertices, edges } = parseData(data);
     vertices.forEach(vertex => {
       cy.current.add({
-        group: "nodes", data: { id: vertex },
+        group: "nodes", data: { id: vertex, label: vertex },
         position: pos[vertex] || { x: Math.random() * 800, y: Math.random() * 600 }
       });
     });
@@ -130,6 +128,7 @@ export default function Graph({ algo, animation }) {
     cy.current.nodes().forEach(node => {
       node.style("background-color", "#6EACDA");
       node.unselect();
+      node.data("label", node.id());
     });
     cy.current.edges().forEach(edge => {
       edge.style("line-color", "#6EACDA");

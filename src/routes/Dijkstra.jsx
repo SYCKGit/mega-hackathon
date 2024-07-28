@@ -14,8 +14,8 @@ function dijkstraAnimation(cy, startNode, isDirected){
     const [d, u] = pq.front();
     pq.pop();
     if (d > dist[u]) continue;
-    aq.push(cy.$id(u), {style: {"background-color": "#03346E"}});
-    let edges = cy.edges(`[source = "${u}]`);
+    aq.push(cy.$id(u), e => e.data("label", dist[u]));
+    let edges = cy.edges(`[source = "${u}"]`);
     if (!isDirected) edges = edges.union(cy.edges(`[target = "${u}"]`));
     edges.forEach(edge => {
       const v = edge.target().id();
@@ -23,8 +23,7 @@ function dijkstraAnimation(cy, startNode, isDirected){
       if (dist[u] + w < dist[v]){
         dist[v] = dist[u] + w;
         pq.push([dist[v], v]);
-        cy.$id(v).data("dist", dist[v]);
-        aq.push(edge, {style: {"line-color": "#03346E", "target-arrow-color": "#03346E"}});
+        aq.push(edge, () => cy.$id(v).data("label", dist[v]));
       }
     });
   }
