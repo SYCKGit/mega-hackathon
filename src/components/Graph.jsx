@@ -7,7 +7,7 @@ import "./Graph.css";
  * @param {string} data - Input data containing edges.
  * @returns {object} - Object containing vertices and edges.
  */
-function parseData(data){
+function parseData(data) {
   let vertices = new Set(), edges = new Set();
 
   for (const line of data.split("\n")) {
@@ -23,8 +23,9 @@ function parseData(data){
   return { vertices: Array.from(vertices), edges: Array.from(edges) };
 }
 
-export default function Graph(){
+export default function Graph() {
   const [data, setData] = useState("");
+  const [isDirected, setIsDirected] = useState(true);
   const cy = useRef();
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function Graph(){
             "width": 3,
             "line-color": "#6EACDA",
             "target-arrow-color": "#6EACDA",
-            "target-arrow-shape": "triangle",
+            "target-arrow-shape": isDirected ? "triangle" : "none",
             "curve-style": "bezier"
           }
         }
@@ -66,6 +67,7 @@ export default function Graph(){
         rows: 1
       }
     });
+
     cy.current.on('tap', 'node', (event) => {
       const node = event.target;
       if (node.selected()) {
@@ -101,7 +103,12 @@ export default function Graph(){
     edges.forEach(({ source, target }) => {
       cy.current.add({ group: "edges", data: { id: source + "-" + target, source, target } });
     });
-  }, [data]);
+
+    cy.current.style().selector('edge').style({
+      'target-arrow-shape': isDirected ? 'triangle' : 'none'
+    }).update();
+
+  }, [data, isDirected]);
 
   const handleBFSClick = () => {
     const selectedNodes = cy.current.$('node:selected');
@@ -111,15 +118,16 @@ export default function Graph(){
       alert("Please select a node to start BFS.");
     }
   };
+
   const bfs = (startNode) => {
-    const bfsResult = cy.current.elements().bfs(`#${startNode}`, function(){}, true);
+    const bfsResult = cy.current.elements().bfs(`#${startNode}`, function () { }, isDirected);
     let i = 0;
-    const highlightNextEle = function(){
-      if( i < bfsResult.path.length ){
+    const highlightNextEle = function () {
+      if (i < bfsResult.path.length) {
         const ele = bfsResult.path[i];
         if (ele.isNode()) {
           ele.animate({
-            style: { "background-color": "#03346E"},
+            style: { "background-color": "#03346E" },
             duration: 500
           });
         } else if (ele.isEdge()) {
@@ -145,14 +153,14 @@ export default function Graph(){
   };
 
   const dfs = (startNode) => {
-    const dfsResult = cy.current.elements().dfs(`#${startNode}`, function(){}, true);
+    const dfsResult = cy.current.elements().dfs(`#${startNode}`, function () { }, isDirected);
     let i = 0;
-    const highlightNextEle = function() {
+    const highlightNextEle = function () {
       if (i < dfsResult.path.length) {
         const ele = dfsResult.path[i];
         if (ele.isNode()) {
           ele.animate({
-            style: { "background-color": "#B30000"},
+            style: { "background-color": "#B30000" },
             duration: 500
           });
         } else if (ele.isEdge()) {
@@ -183,13 +191,16 @@ export default function Graph(){
   return (
       <div id="container">
         <div style={{ marginBottom: '10px' }}>
-          <textarea
-              id="inp"
-              value={data}
-              onChange={(e) => setData(e.target.value)}
-              style={{ width: '100%', height: '400px', marginBottom: '10px' }}
-          ></textarea>
-          <button onClick={handleBFSClick} style={{ width: '100%' }}>
+        <textarea
+            id="inp"
+            value={data}
+            onChange={(e) => setData(e.target.value)}
+            style={{ width: '100%', height: '400px', marginBottom: '10px' }}
+        ></textarea>
+          <button onClick={() => setIsDirected(!isDirected)} style={{ width: '100%' }}>
+            {isDirected ? "Switch to Undirected Graph" : "Switch to Directed Graph"}
+          </button>
+          <button onClick={handleBFSClick} style={{ width: '100%', marginTop: '10px' }}>
             Start BFS
           </button>
           <button onClick={handleDFSClick} style={{ width: '100%', marginTop: '10px' }}>
