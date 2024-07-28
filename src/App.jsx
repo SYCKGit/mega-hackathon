@@ -31,6 +31,11 @@ function App() {
                     <a href="binsearch">Go to Binary Search Page</a>
                 </section>
 
+                <section id="knapsack">
+                    <h2>Knapsack Problem (DP)</h2>
+                    <p>Learn about Knapsack Problem (DP).</p>
+                    <a href="knapsack">Go to Knapsack Problem Page</a>
+                </section>
 
             </main>
             <footer>

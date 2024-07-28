@@ -75,3 +75,62 @@ footer {
 footer p {
   margin: 0;
 }
+
+input[type="number"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 1em;
+  width: calc(100% / 3 - 22px); /* Adjust width based on the number of inputs */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #3E8E41;
+  box-shadow: 0 0 5px rgba(62, 142, 65, 0.5);
+  outline: none;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3E8E41;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2d6a34;
+}
+
+button:disabled {
+  background-color: #a8c0a8;
+  cursor: not-allowed;
+}
+
+.array-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.array-element {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  text-align: center;
+}
+
+.array-element.mid {
+  border-color: #ff0000;
+}
+
+.array-element.range {
+  background-color: #e0ffe0;
+}

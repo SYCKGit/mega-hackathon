@@ -7,6 +7,8 @@ import Bfs from './routes/Bfs.jsx';
 import Dfs from './routes/Dfs.jsx';
 import Dijkstra from './routes/Dijkstra.jsx';
 import Binsearch from './routes/Binsearch.jsx';
+import Knapsack from './routes/Knapsack.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -29,8 +31,11 @@ const router = createBrowserRouter([
   {
     path: '/binsearch',
     element: <Binsearch />
+  },
+  {
+    path: '/knapsack',
+    element: <Knapsack />
   }
-
 
 
 ]);
