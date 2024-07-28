@@ -1,1 +1,28 @@
 
+#cy {
+  height: 600px;
+  border: 1px solid #ccc;
+  flex: 3;
+  margin-left: 30px;
+}
+
+#container {
+  display: flex;
+  align-items: stretch;
+}
+
+#inp {
+  flex: 1;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#inp:focus {
+  outline: none;
+  border-color: #3E8E41;
+}
