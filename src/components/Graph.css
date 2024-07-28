@@ -1,5 +1,5 @@
 #cy {
-  height: 600px;
+  flex-grow: 1;
   border: 1px solid #ccc;
   flex: 3;
   margin-left: 30px;

@@ -140,12 +140,12 @@ export default function Graph({ algo, animation }) {
 
   return (
       <div id="container">
-        <div style={{ marginBottom: '10px' }}>
-        <textarea
-            id="inp"
-            value={data}
-            onChange={(e) => setData(e.target.value)}
-        ></textarea>
+        <div>
+          <textarea
+              id="inp"
+              value={data}
+              onChange={(e) => setData(e.target.value)}
+          ></textarea>
           <button onClick={() => setIsDirected(!isDirected)} style={{ width: '100%' }}>
             {isDirected ? "Switch to Undirected Graph" : "Switch to Directed Graph"}
           </button>
@@ -156,7 +156,7 @@ export default function Graph({ algo, animation }) {
             Reset
           </button>
         </div>
-        <div id="cy" style={{ width: '100%', height: '500px' }}></div>
+        <div id="cy"></div>
       </div>
   );
 }
