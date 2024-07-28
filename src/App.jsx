@@ -25,6 +25,12 @@ function App() {
                     <a href="dijkstra">Go to Dijkstra Algorithm Page</a>
                 </section>
 
+                <section id="binsearch">
+                    <h2>Binary Search</h2>
+                    <p>Learn about Binary Search.</p>
+                    <a href="binsearch">Go to Binary Search Page</a>
+                </section>
+
 
             </main>
             <footer>

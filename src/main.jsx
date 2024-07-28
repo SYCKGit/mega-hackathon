@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import './styles.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Bfs from './routes/Bfs.jsx';
 import Dfs from './routes/Dfs.jsx';
 import Dijkstra from './routes/Dijkstra.jsx';
+import Binsearch from './routes/Binsearch.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -22,7 +25,14 @@ const router = createBrowserRouter([
   {
     path: '/dijkstra',
     element: <Dijkstra />
+  },
+  {
+    path: '/binsearch',
+    element: <Binsearch />
   }
+
+
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
