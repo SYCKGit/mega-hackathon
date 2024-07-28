@@ -48,7 +48,7 @@ export default function Bfs() {
         </section>
       </main>
       <footer>
-        <p>&copy; 2024 Graph Algorithms Interactive Learning</p>
+      <p> AlgoSpectrum - Oviyan Gandhi, Samik Goyal, Samvar Shah, Lu Chang</p>
       </footer>
     </>
   );

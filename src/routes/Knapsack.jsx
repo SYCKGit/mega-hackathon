@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "../styles.css";
 
-// This component visualizes the solution to the 0/1 Knapsack problem
 function KnapsackVisualization({ weights, values, capacity }) {
   const [result, setResult] = useState(null);
   const [steps, setSteps] = useState([]);
@@ -71,7 +70,6 @@ function KnapsackVisualization({ weights, values, capacity }) {
   );
 }
 
-// Main component for user input and integration with KnapsackVisualization
 export default function Knapsack() {
   const [numItems, setNumItems] = useState("");
   const [weights, setWeights] = useState([]);
@@ -173,7 +171,7 @@ export default function Knapsack() {
         </section>
       </main>
       <footer>
-        <p>&copy; 2024 Graph Algorithms Interactive Learning</p>
+        <p> AlgoSpectrum - Oviyan Gandhi, Samik Goyal, Samvar Shah, Lu Chang</p>
       </footer>
     </>
   );

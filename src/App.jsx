@@ -76,10 +76,10 @@ const styles = {
     width: '100%'
   },
   binsearch: {
-    transform: 'translate(150px, -100px)'
+    transform: 'translate(150px, -70px)'
   },
   knapsack: {
-    transform: 'translate(150px, -100px)'
+    transform: 'translate(150px, -70px)'
   }
 };
 
@@ -87,7 +87,7 @@ function App() {
   return (
     <>
       <header style={styles.header}>
-        <h1 style={styles.h1}>Graph Algorithms Interactive Learning</h1>
+        <h1 style={styles.h1}>AlgoSpectrum</h1>
       </header>
       <main style={styles.main}>
         <section id="bfs" style={styles.section}>
@@ -126,7 +126,7 @@ function App() {
         </section>
       </main>
       <footer style={styles.footer}>
-        <p>&copy; 2024 Graph Algorithms Interactive Learning</p>
+        <p>&copy; AlgoSpectrum - Oviyan Gandhi, Samik Goyal, Samvar Shah, Lu Chang </p>
       </footer>
     </>
   );
