@@ -121,25 +121,56 @@ export default function Graph(){
     highlightNextEle();
   };
 
+  const handleDFSClick = () => {
+    const selectedNodes = cy.current.$('node:selected');
+    if (selectedNodes.nonempty()) {
+      dfs(selectedNodes.first().id());
+    } else {
+      alert("Please select a node to start DFS.");
+    }
+  };
+
+  const dfs = (startNode) => {
+    const dfsResult = cy.current.elements().dfs(`#${startNode}`, function(){}, true);
+    let i = 0;
+    const highlightNextEle = function() {
+      if (i < dfsResult.path.length) {
+        const ele = dfsResult.path[i];
+        if (ele.isNode()) {
+          ele.animate({
+            style: { "background-color": "#B30000"},
+            duration: 500
+          });
+        } else if (ele.isEdge()) {
+          ele.animate({
+            style: { "line-color": "#B30000", "target-arrow-color": "#B30000" },
+            duration: 500
+          });
+        }
+        i++;
+        setTimeout(highlightNextEle, 1000);
+      }
+    };
+    highlightNextEle();
+  };
+
   return (
       <div id="container">
-        <div style={{ marginBottom: '10px' }}> {/* Container for textarea and button */}
+        <div style={{ marginBottom: '10px' }}>
           <textarea
               id="inp"
               value={data}
               onChange={(e) => setData(e.target.value)}
-              style={{ width: '100%', height: '400px', marginBottom: '10px' }} // Set the height to 400px and ensure the textarea is full width
+              style={{ width: '100%', height: '400px', marginBottom: '10px' }}
           ></textarea>
-          <button
-              onClick={handleBFSClick}
-              style={{ width: '100%' }} // Make the button the same width as the textarea
-          >
+          <button onClick={handleBFSClick} style={{ width: '100%' }}>
             Start BFS
           </button>
+          <button onClick={handleDFSClick} style={{ width: '100%', marginTop: '10px' }}>
+            Start DFS
+          </button>
         </div>
-        <div id="cy" style={{ width: '100%', height: '500px' }}> {/* Maintain explicit dimensions for the graph area */}
-          {/* Graph will render here */}
-        </div>
+        <div id="cy" style={{ width: '100%', height: '500px' }}></div>
       </div>
   );
 }
