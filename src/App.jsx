@@ -126,7 +126,7 @@ function App() {
         </section>
       </main>
       <footer style={styles.footer}>
-        <p>&copy; AlgoSpectrum - Oviyan Gandhi, Samik Goyal, Samvar Shah, Lu Chang </p>
+        <p>AlgoSpectrum - Oviyan Gandhi, Samik Goyal, Samvar Shah, Lu Chang </p>
       </footer>
     </>
   );
