@@ -1,5 +1,34 @@
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 import Graph from "../components/Graph";
 import "../styles.css";
+import { AnimationQueue } from "../lib/utils";
+
+function dijkstraAnimation(cy, startNode, isDirected){
+  const aq = new AnimationQueue(750);
+  const pq = new MinPriorityQueue();
+  const dist = {};
+  cy.nodes().forEach(node => dist[node.id()] = Infinity);
+  dist[startNode] = 0;
+  pq.push([0, startNode]);
+  while (!pq.isEmpty()){
+    const [d, u] = pq.front();
+    pq.pop();
+    if (d > dist[u]) continue;
+    aq.push(cy.$id(u), {style: {"background-color": "#03346E"}});
+    let edges = cy.edges(`[source = "${u}]`);
+    if (!isDirected) edges = edges.union(cy.edges(`[target = "${u}"]`));
+    edges.forEach(edge => {
+      const v = edge.target().id();
+      const w = Number(edge.data("weight")) || 0;
+      if (dist[u] + w < dist[v]){
+        dist[v] = dist[u] + w;
+        pq.push([dist[v], v]);
+        cy.$id(v).data("dist", dist[v]);
+        aq.push(edge, {style: {"line-color": "#03346E", "target-arrow-color": "#03346E"}});
+      }
+    });
+  }
+}
 
 export default function Dijkstra() {
   return (
@@ -39,7 +68,7 @@ export default function Dijkstra() {
         </section>
         <section id="graph-visualizer">
           <h2>Graph Visualizer</h2>
-          <Graph />
+          <Graph algo="Dijkstra" animation={dijkstraAnimation} />
         </section>
       </main>
       <footer>

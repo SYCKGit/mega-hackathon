@@ -1,25 +1,36 @@
+export class AnimationQueue {
+  constructor(timing) {
+    this.timing = timing;
+    this.queue = [];
+    this.running = false;
+  }
+
+  push(el) {
+    this.queue.push(el);
+    if (!this.running)
+      this.execute();
+  }
+
+  execute() {
+    if (this.queue.length === 0){
+      this.running = false;
+      return;
+    }
+    this.running = true;
+    const el = this.queue.shift();
+    if (el.isNode())
+      el.animate({style: { "background-color": "#03346E" }, duration: this.timing});
+    else if (el.isEdge())
+      el.animate({style: { "line-color": "#03346E", "target-arrow-color": "#03346E" }, duration: this.timing});
+    setTimeout(() => this.execute(), this.timing * 2);
+  }
+}
+
 export function searchAnimation(algo) {
   return (cy, startNode, isDirected) => {
     const result = cy.elements()[algo](`#${startNode}`, () => {}, isDirected);
-    let i = 0;
-    const highlightNextEle = () => {
-      if (i < result.path.length) {
-        const ele = result.path[i];
-        if (ele.isNode()) {
-          ele.animate({
-            style: { "background-color": "#03346E" },
-            duration: 500
-          });
-        } else if (ele.isEdge()) {
-          ele.animate({
-            style: { "line-color": "#03346E", "target-arrow-color": "#03346E" },
-            duration: 500
-          });
-        }
-        i++;
-        setTimeout(highlightNextEle, 1000);
-      }
-    }
-    highlightNextEle();
+    const queue = new AnimationQueue(500);
+    for (const el of result.path)
+      queue.push(el);
   }
 };
